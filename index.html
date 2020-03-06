@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .tooltip {
+            position: relative;
+        }
+        .tooltip-content {
+            position: absolute;
+            bottom: -20px;
+            background-color: #fffdf3;
+            opacity: .8;
+        }
+    </style>
+</head>
+<body>
+<div class="tooltip" data-tooltip="Текст для всплывающей подсказки.">
+    Наведи курсор на меня ;)
+</div>
+
+<ul class="list">
+    <li>
+        <button class="list-title">Click here</button>
+        <ul class="list-items">
+            <li>item1</li>
+            <li>item2</li>
+            <li>item3</li>
+        </ul>
+    </li>
+</ul>
+
+<script>
+    'use strict';
+
+    const $container = document.querySelector('.tooltip');
+    const $list = document.querySelector('.list');
+    let element;
+
+    /*tooltip*/
+    $container.addEventListener('mouseover', (e) => {
+        const data = e.currentTarget.dataset.tooltip;
+
+        element = document.createElement('span');
+        element.classList.add('tooltip-content');
+        element.innerHTML = data;
+
+        $container.append(element);
+    });
+
+    $container.addEventListener('mouseout', () => {
+        if (element) {
+            element.remove();
+        }
+    });
+
+    /*list*/
+    $list.addEventListener('click', (e) => {
+        const clickElement = e.target;
+        const targetElement = clickElement.nextElementSibling;
+
+        if (clickElement.classList.contains('list-title')) {
+            targetElement ? targetElement.hidden = !targetElement.hidden : 0;
+        }
+    });
+</script>
+</body>
+</html>
